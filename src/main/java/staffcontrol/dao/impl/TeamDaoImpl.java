@@ -1,13 +1,11 @@
 package staffcontrol.dao.impl;
 
+import lombok.Data;
 import staffcontrol.dao.interfaces.TeamDAO;
-import staffcontrol.entity.Feedback;
 import staffcontrol.entity.Team;
 import staffcontrol.util.ConnectionUtil;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TeamDaoImpl implements TeamDAO {
     private final ConnectionUtil connectionUtil;
@@ -69,7 +67,7 @@ public class TeamDaoImpl implements TeamDAO {
         ResultSet resultSet;
         try (Connection connection = connectionUtil.getConnection();
              PreparedStatement prepStat = connection
-                     .prepareStatement("SELECT * FROM staffcontrol.team WHERE id = ?")) {
+                     .prepareStatement("SELECT * FROM staffcontrol.team WHERE id = (?)")) {
             prepStat.setLong(1, id);
             resultSet = prepStat.executeQuery();
             while (resultSet.next()) {

@@ -1,11 +1,14 @@
 package staffcontrol.entity;
 
+import lombok.*;
 import staffcontrol.constants.Methodology;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;;
+;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Project {
     private Long id;
     private String name;

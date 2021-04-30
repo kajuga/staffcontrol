@@ -4,7 +4,7 @@ INSERT INTO staffcontrol.feedback (description, creation_date) VALUES
 ('thirdDescription', 'Wed 12 Dec 07:37:14 1990 PST'),
 ('firthDescription', 'Wed 11 Jan 11:32:17 1991 PST');
 
-INSERT INTO staffcontrol.team(name) VALUES
+INSERT INTO staffcontrol.team(title) VALUES
 ('Team_1'),
 ('Team_2'),
 ('Team_3');

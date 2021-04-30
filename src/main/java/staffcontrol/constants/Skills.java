@@ -1,7 +1,19 @@
 package staffcontrol.constants;
 
 public enum Skills {
-    SKILLS_1,
-    SKILLS_2,
-    SKILLS_3
+    SKILLS_FIRST,
+    SKILLS_SECOND,
+    SKILLS_THIRD;
+
+
+    public static Skills fromString(String value) {
+        if (value != null) {
+            for (Skills skill : Skills.values()) {
+                if (value.equalsIgnoreCase(skill.name())) {
+                    return skill;
+                }
+            }
+        }
+        throw new IllegalArgumentException("No such value");
+    }
 }
