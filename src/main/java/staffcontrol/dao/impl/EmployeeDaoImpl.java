@@ -7,25 +7,26 @@ import staffcontrol.dao.interfaces.EmployeeDAO;
 import staffcontrol.dao.interfaces.FeedbackDAO;
 import staffcontrol.dao.interfaces.ProjectDAO;
 import staffcontrol.entity.Employee;
+import staffcontrol.util.BasicConnectionPool;
 import staffcontrol.util.ConnectionUtil;
 import java.sql.*;
 
 @Log
 public class EmployeeDaoImpl implements EmployeeDAO {
 
-    private final ConnectionUtil connectionUtil;
+    private final BasicConnectionPool connectionPool;
     private PreparedStatement prepStat;
     private ProjectDAO projectDAO;
     private FeedbackDAO feedbackDAO;
 
-    public EmployeeDaoImpl(ConnectionUtil connectionUtil) {
-        this.connectionUtil = connectionUtil;
+    public EmployeeDaoImpl(BasicConnectionPool connectionPool) {
+        this.connectionPool = connectionPool;
     }
 
 
     @Override
     public Employee create(Employee employee) {
-        try (Connection connection = connectionUtil.getConnection();
+        try (Connection connection = connectionPool.getConnection();
              PreparedStatement prepStat = connection
                      .prepareStatement("INSERT INTO staffcontrol.employee (first_name, last_name, phone_number, email, skype, entry_date, experience, experience_level, language_level, birthday, project_id, feedback_id) " +
                              "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
@@ -58,7 +59,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     @Override
     public boolean remove(Long id) {
         boolean result = false;
-        try (Connection connection = connectionUtil.getConnection();
+        try (Connection connection = connectionPool.getConnection();
              PreparedStatement prepStat = connection
                      .prepareStatement("DELETE FROM staffcontrol.employee WHERE id = (?)")) {
             prepStat.setLong(1, id);
@@ -73,7 +74,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 
     @Override
     public void update(Long id, Employee employee) {
-        try (Connection connection = connectionUtil.getConnection();
+        try (Connection connection = connectionPool.getConnection();
              PreparedStatement prepStat = connection.prepareStatement("UPDATE staffcontrol.employee SET " +
                      "first_name = (?), last_name = (?), phone_number = (?), email = (?), skype = (?), entry_date = (?), " +
                      "experience = (?), experience_level = (?), language_level = (?), birthday = (?), project_id = (?), feedback_id = (?) WHERE id = (?)")) {
@@ -101,7 +102,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
     public Employee findById(Long id) {
         Employee employee = new Employee();
         ResultSet resultSet;
-        try (Connection connection = connectionUtil.getConnection();
+        try (Connection connection = connectionPool.getConnection();
              PreparedStatement prepStat = connection
                      .prepareStatement("SELECT * FROM staffcontrol.employee WHERE id = (?)")) {
             prepStat.setLong(1, id);

@@ -5,25 +5,27 @@ import staffcontrol.constants.Methodology;
 import staffcontrol.dao.interfaces.ProjectDAO;
 import staffcontrol.dao.interfaces.TeamDAO;
 import staffcontrol.entity.Project;
-import staffcontrol.util.ConnectionUtil;
+import staffcontrol.util.BasicConnectionPool;
 import java.sql.*;
 
 @Log
 public class ProjectDaoImpl implements ProjectDAO {
 
-    private ConnectionUtil connectionUtil;
+    private final BasicConnectionPool connectionPool;
     private TeamDAO teamDAO;
 
-    public ProjectDaoImpl(ConnectionUtil connectionUtil, TeamDAO teamDAO) {
-        this.connectionUtil = connectionUtil;
+    public ProjectDaoImpl(BasicConnectionPool connectionPool, TeamDAO teamDAO) {
+        this.connectionPool = connectionPool;
         this.teamDAO = teamDAO;
     }
 
     @Override
     public Project create(Project project) {
-        try (Connection connection = connectionUtil.getConnection();
-             PreparedStatement prepStat = connection.prepareStatement(
-                     "INSERT INTO staffcontrol.project (name, client, duration, methodology, project_manager, team_id) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            PreparedStatement prepStat = connection.prepareStatement(
+                     "INSERT INTO staffcontrol.project (name, client, duration, methodology, project_manager, team_id) VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             prepStat.setString(1, project.getName());
             prepStat.setString(2, project.getClient());
             prepStat.setString(3, project.getDuration());
@@ -39,6 +41,10 @@ public class ProjectDaoImpl implements ProjectDAO {
             }
         } catch (SQLException exc) {
             exc.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connectionPool.releaseConnection(connection);
+            }
         }
         log.fine("Project " + project.getId() + " succesfull created");
         return project;
@@ -47,14 +53,19 @@ public class ProjectDaoImpl implements ProjectDAO {
     @Override
     public boolean remove(Long id) {
         boolean result = false;
-        try (Connection connection = connectionUtil.getConnection();
-             PreparedStatement prepStat = connection
-                     .prepareStatement("DELETE FROM staffcontrol.project WHERE id = (?)")) {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+             PreparedStatement prepStat = connection.prepareStatement("DELETE FROM staffcontrol.project WHERE id = (?)");
             prepStat.setLong(1, id);
             result = prepStat.executeUpdate() != 0;
             prepStat.executeUpdate();
         } catch (SQLException exc) {
             exc.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connectionPool.releaseConnection(connection);
+            }
         }
         log.fine("Project " + id + " successfull deleted");
         return result;
@@ -62,9 +73,11 @@ public class ProjectDaoImpl implements ProjectDAO {
 
     @Override
     public void update(Long id, Project project) {
-        try (Connection connection = connectionUtil.getConnection();
-             PreparedStatement prepStat = connection.prepareStatement("UPDATE staffcontrol.project SET name = (?), " +
-                     "client=(?), duration=(?), methodology=(?), project_manager=(?), team_id=(?) WHERE id = (?)")) {
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            PreparedStatement prepStat = connection.prepareStatement("UPDATE staffcontrol.project SET name = (?), " +
+                     "client=(?), duration=(?), methodology=(?), project_manager=(?), team_id=(?) WHERE id = (?)");
             prepStat.setString(1, project.getName());
             prepStat.setString(2, project.getClient());
             prepStat.setString(3, project.getDuration());
@@ -75,6 +88,10 @@ public class ProjectDaoImpl implements ProjectDAO {
             prepStat.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connectionPool.releaseConnection(connection);
+            }
         }
         log.fine("Project " + id + " successfull updated");
     }
@@ -83,9 +100,11 @@ public class ProjectDaoImpl implements ProjectDAO {
     public Project findById(Long id) {
         Project project = new Project();
         ResultSet resultSet;
-        try (Connection connection = connectionUtil.getConnection();
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
              PreparedStatement prepStat = connection
-                     .prepareStatement("SELECT * FROM staffcontrol.project WHERE id = (?)")) {
+                     .prepareStatement("SELECT * FROM staffcontrol.project WHERE id = (?)");
             prepStat.setLong(1, id);
             resultSet = prepStat.executeQuery();
             while (resultSet.next()) {
@@ -99,6 +118,10 @@ public class ProjectDaoImpl implements ProjectDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connectionPool.releaseConnection(connection);
+            }
         }
         log.fine("Project " + id + " successfull finded");
         return project;

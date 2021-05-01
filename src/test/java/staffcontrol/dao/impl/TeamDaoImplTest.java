@@ -1,15 +1,35 @@
 package staffcontrol.dao.impl;
 
-import org.junit.Test;
-import staffcontrol.ConnectionTestUtil;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import staffcontrol.entity.Team;
+import staffcontrol.util.BasicConnectionPool;
+
 import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
+@RunWith(JUnit4.class)
 public class TeamDaoImplTest {
-    private TeamDaoImpl teamDao = new TeamDaoImpl(new ConnectionTestUtil());
+    private TeamDaoImpl teamDao;
+    private static BasicConnectionPool basicConnectionPool;
 
+    @BeforeClass
+    public static void initConnectionPool() {
+        basicConnectionPool = BasicConnectionPool.create();
+    }
+
+    @Before
+    public void init() {
+        teamDao = new TeamDaoImpl(basicConnectionPool);
+    }
+
+    @AfterClass
+    public static void destroy() throws SQLException {
+        basicConnectionPool.shutdown();
+    }
 
     @Test
     public void createTeam() throws SQLException {
@@ -39,7 +59,7 @@ public class TeamDaoImplTest {
     public void updateTeam() {
         Team team = new Team();
         team.setTitle("test update description");
-        team= teamDao.create(team);
+        team = teamDao.create(team);
         Long idCreated = team.getId();
         assertNotNull(idCreated);
         Team updatedTeam = new Team();
@@ -61,8 +81,4 @@ public class TeamDaoImplTest {
         assertEquals(findedById.getTitle(), newTeam.getTitle());
         teamDao.remove(id);
     }
-
-    
-    
-    
 }

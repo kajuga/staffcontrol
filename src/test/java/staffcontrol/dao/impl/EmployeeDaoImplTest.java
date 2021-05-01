@@ -1,8 +1,8 @@
 package staffcontrol.dao.impl;
 
+import lombok.SneakyThrows;
 import org.junit.Before;
 import org.junit.Test;
-import staffcontrol.ConnectionTestUtil;
 import staffcontrol.constants.ExperienceLevel;
 import staffcontrol.constants.LanguageLevel;
 import staffcontrol.constants.Methodology;
@@ -10,6 +10,7 @@ import staffcontrol.entity.Employee;
 import staffcontrol.entity.Feedback;
 import staffcontrol.entity.Project;
 import staffcontrol.entity.Team;
+import staffcontrol.util.BasicConnectionPool;
 
 public class EmployeeDaoImplTest {
     private EmployeeDaoImpl employeeDao;
@@ -17,18 +18,19 @@ public class EmployeeDaoImplTest {
     private ProjectDaoImpl projectDAO;
     private FeedbackDaoImpl feedbackDAO;
 
-
+    @SneakyThrows
     @Before
-    public void init(){
-        ConnectionTestUtil connectionTestUtil = new ConnectionTestUtil();
-        feedbackDAO = new FeedbackDaoImpl(connectionTestUtil);
-        teamDao = new TeamDaoImpl(connectionTestUtil);
-        projectDAO = new ProjectDaoImpl(connectionTestUtil, teamDao);
-        employeeDao = new EmployeeDaoImpl(connectionTestUtil);
+    public void init() {
+        BasicConnectionPool connectionPool = BasicConnectionPool.create();
+
+        feedbackDAO = new FeedbackDaoImpl(connectionPool);
+        teamDao = new TeamDaoImpl(connectionPool);
+        projectDAO = new ProjectDaoImpl(connectionPool, teamDao);
+        employeeDao = new EmployeeDaoImpl(connectionPool);
     }
 
     @Test
-    public void createAndRead(){
+    public void createAndRead() {
         Employee employee = new Employee();
 
         employee.setFirstName("first_name");
@@ -36,11 +38,11 @@ public class EmployeeDaoImplTest {
         employee.setPhoneNumber("phone_number");
         employee.setEmail("email");
         employee.setSkype("skype");
-        employee.setEntryDate((long) (2001-12-01));
+        employee.setEntryDate((long) (2001 - 12 - 01));
         employee.setExperience("advanced pc user");
         employee.setExperienceLevel(ExperienceLevel.J2);
         employee.setLanguageLevel(LanguageLevel.B1);
-        employee.setBirthDay((long) (2000-06-04));
+        employee.setBirthDay((long) (2000 - 06 - 04));
 
         Project project = new Project();
         project.setName("Kremlin vote counting system");
@@ -61,13 +63,11 @@ public class EmployeeDaoImplTest {
         employee.setProject(project);
         employee.setFeedback(feedback);
         long createdInDbId = employeeDao.create(employee).getId();
-
-        //TODO created, but findById not worket yet
     }
 
     @Test
     public void updateAndDelete() {
-    //TODO this
+        //TODO this
     }
 }
 

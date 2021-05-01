@@ -1,16 +1,36 @@
 package staffcontrol.dao.impl;
 
-import staffcontrol.ConnectionTestUtil;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import staffcontrol.entity.Feedback;
 import org.junit.Test;
+import staffcontrol.util.BasicConnectionPool;
+
 import java.sql.SQLException;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 
 public class FeedbackDaoImplTest {
+    private static BasicConnectionPool basicConnectionPool;
+    private FeedbackDaoImpl feedbackDao;
 
-    private FeedbackDaoImpl feedbackDao = new FeedbackDaoImpl(new ConnectionTestUtil());
+    @BeforeClass
+    public static void initConnectionPool() {
+        basicConnectionPool = BasicConnectionPool.create();
+    }
 
+    @Before
+    public void init() {
+        feedbackDao = new FeedbackDaoImpl(basicConnectionPool);
+    }
+
+    @AfterClass
+    public static void destroy() throws SQLException {
+        basicConnectionPool.shutdown();
+    }
 
     @Test
     public void createFeedback() throws SQLException {
@@ -71,11 +91,8 @@ public class FeedbackDaoImplTest {
         tempFeedback.setDescription("findAll test description");
         Feedback[] feedbacks = new Feedback[]{tempFeedback};
         feedbackDao.create(tempFeedback);
-        assertEquals(feedbackDao.findAll().size(), feedbacks.length);
+        List<Feedback> finded = feedbackDao.findAll();
         assertEquals(feedbackDao.findAll().get(0).getDescription(), feedbacks[0].getDescription());
         feedbackDao.remove(feedbackDao.findAll().get(0).getId());
     }
 }
-
-
-
