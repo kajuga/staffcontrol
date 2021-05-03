@@ -9,4 +9,5 @@ public interface EmployeeDAO {
     boolean remove (Long id);
     void update(Long id, Employee employee);
     Employee findById(Long id);
+    List<Employee> findAll();
 }
