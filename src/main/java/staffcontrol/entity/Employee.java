@@ -4,12 +4,13 @@ import lombok.*;
 import staffcontrol.constants.ExperienceLevel;
 import staffcontrol.constants.LanguageLevel;
 
+import java.sql.Date;
+import java.time.LocalDate;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
+@Data
 @Setter
 @Getter
-@ToString
 public class Employee {
     private Long id;
     private String firstName;
@@ -17,11 +18,11 @@ public class Employee {
     private String phoneNumber;
     private String email;
     private String skype;
-    private Long entryDate;
+    private Date entryDate;
     private String experience;
     private ExperienceLevel experienceLevel;
     private LanguageLevel languageLevel;
-    private Long birthDay;
+    private Date birthDay;
     private Project project;
     private Feedback feedback;
 }

@@ -4,11 +4,7 @@ import lombok.*;
 import staffcontrol.constants.Methodology;
 ;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class Project {
     private Long id;
     private String name;

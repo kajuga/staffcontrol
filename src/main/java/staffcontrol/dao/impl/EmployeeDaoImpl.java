@@ -38,11 +38,11 @@ public class EmployeeDaoImpl implements EmployeeDAO {
             prepStat.setString(3, employee.getPhoneNumber());
             prepStat.setString(4, employee.getEmail());
             prepStat.setString(5, employee.getSkype());
-            prepStat.setDate(6, Date.valueOf(LocalDate.ofEpochDay(employee.getEntryDate())));
+            prepStat.setDate(6, employee.getEntryDate());
             prepStat.setString(7, employee.getExperience());
             prepStat.setString(8, String.valueOf(employee.getExperienceLevel()));
             prepStat.setString(9, String.valueOf(employee.getLanguageLevel()));
-            prepStat.setDate(10, Date.valueOf(LocalDate.ofEpochDay(employee.getBirthDay())));
+            prepStat.setDate(10, employee.getBirthDay());
             prepStat.setLong(11, employee.getProject().getId());
             prepStat.setLong(12, employee.getFeedback().getId());
             prepStat.execute();
@@ -97,11 +97,11 @@ public class EmployeeDaoImpl implements EmployeeDAO {
             prepStat.setString(3, employee.getPhoneNumber());
             prepStat.setString(4, employee.getEmail());
             prepStat.setString(5, employee.getSkype());
-            prepStat.setDate(6, new Date(employee.getEntryDate()));
+            prepStat.setDate(6, employee.getEntryDate());
             prepStat.setString(7, employee.getExperience());
             prepStat.setString(8, String.valueOf(employee.getExperienceLevel()));
             prepStat.setString(9, String.valueOf(employee.getLanguageLevel()));
-            prepStat.setDate(10, new Date(employee.getBirthDay()));
+            prepStat.setDate(10, employee.getBirthDay());
             prepStat.setLong(11, employee.getProject().getId());
             prepStat.setLong(12, employee.getFeedback().getId());
             prepStat.setLong(13, id);
@@ -133,15 +133,16 @@ public class EmployeeDaoImpl implements EmployeeDAO {
                 employee.setPhoneNumber(resultSet.getString("phone_number"));
                 employee.setEmail(resultSet.getString("email"));
                 employee.setSkype(resultSet.getString("skype"));
-                employee.setEntryDate(resultSet.getDate(7).getTime());
+                employee.setEntryDate(resultSet.getDate(7));
                 employee.setExperience(resultSet.getString(8));
                 String experienceLevel = resultSet.getString("experience_level");
                 employee.setExperienceLevel(experienceLevel != null ? ExperienceLevel.fromString(experienceLevel) : null);
                 String languageLevel = resultSet.getString("language_level");
                 employee.setLanguageLevel(languageLevel != null ? LanguageLevel.fromString(languageLevel) : null);
-                employee.setBirthDay(resultSet.getDate("birthday").getTime());
+                employee.setBirthDay(resultSet.getDate("birthday"));
                 employee.setProject(projectDAO.findById(resultSet.getLong("project_id")));
                 employee.setFeedback(feedbackDAO.findById(resultSet.getLong("feedback_id")));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -161,8 +162,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
         Connection connection = null;
         try {
             connection = connectionPool.getConnection();
-            PreparedStatement prepStat = connection.prepareStatement("SELECT * FROM staffcontrol.employee");
-            resultSet = prepStat.executeQuery();
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM staffcontrol.employee");
             while (resultSet.next()) {
                 Employee employee = new Employee();
                 employee.setId(resultSet.getLong("id"));
@@ -171,13 +172,13 @@ public class EmployeeDaoImpl implements EmployeeDAO {
                 employee.setPhoneNumber(resultSet.getString("phone_number"));
                 employee.setEmail(resultSet.getString("email"));
                 employee.setSkype(resultSet.getString("skype"));
-                employee.setEntryDate(resultSet.getDate(7).getTime());
+                employee.setEntryDate(resultSet.getDate(7));
                 employee.setExperience(resultSet.getString(8));
                 String experienceLevel = resultSet.getString("experience_level");
                 employee.setExperienceLevel(experienceLevel != null ? ExperienceLevel.fromString(experienceLevel) : null);
                 String languageLevel = resultSet.getString("language_level");
                 employee.setLanguageLevel(languageLevel != null ? LanguageLevel.fromString(languageLevel) : null);
-                employee.setBirthDay(resultSet.getDate("birthday").getTime());
+                employee.setBirthDay(resultSet.getDate(11));
                 employee.setProject(projectDAO.findById(resultSet.getLong("project_id")));
                 employee.setFeedback(feedbackDAO.findById(resultSet.getLong("feedback_id")));
                 stuff.add(employee);

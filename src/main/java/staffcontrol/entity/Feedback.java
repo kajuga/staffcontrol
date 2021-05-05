@@ -2,15 +2,11 @@ package staffcontrol.entity;
 
 import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
-@ToString
-public class Feedback {
+import java.sql.Date;
 
+@Data
+public class Feedback {
     private Long id;
     private String description;
-    private Long created;
-
+    private Date created;
 }

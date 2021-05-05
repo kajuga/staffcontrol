@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
@@ -14,13 +13,23 @@
   <url>http://www.example.com</url>
 
   <properties>
-    <maven.compiler.target>11</maven.compiler.target>
-    <maven.compiler.source>11</maven.compiler.source>
-    <junit.version>4.12</junit.version>
-    <lombok.version>1.18.20</lombok.version>
-    <postgresql.version>42.2.11</postgresql.version>
-    <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+<!--    <maven.compiler.target>11</maven.compiler.target>-->
+<!--    <maven.compiler.source>11</maven.compiler.source>-->
+    <lombok.version>1.18.20</lombok.version>
+    <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+    <jstl.version>1.2</jstl.version>
+    <taglibs.version>1.1.2</taglibs.version>
+    <junit.version>4.12</junit.version>
+    <postgresql.version>42.2.12</postgresql.version>
+
+<!--    <jsp-api.version>2.2</jsp-api.version>-->
+<!--    <tomcat-catalina.version>8.5.4</tomcat-catalina.version>-->
+<!--    <commons-dbcp2.version>2.1.1</commons-dbcp2.version>-->
+<!--    <json.version>20160810</json.version>-->
+<!--    <restfb.version>1.25.0</restfb.version>-->
   </properties>
 
   <dependencies>
@@ -31,17 +40,21 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>${postgresql.version}</version>
-    </dependency>
-    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>${javax.servlet-api.version}</version>
       <scope>provided</scope>
     </dependency>
-
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>${jstl.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>${taglibs.version}</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -49,12 +62,10 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.opentable.components</groupId>
-      <artifactId>otj-pg-embedded</artifactId>
-      <version>0.13.3</version>
-      <scope>test</scope>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
     </dependency>
-
   </dependencies>
 
   <build>
@@ -65,7 +76,6 @@
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
         </plugin>
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
@@ -92,5 +102,15 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>

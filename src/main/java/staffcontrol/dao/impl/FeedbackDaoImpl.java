@@ -97,7 +97,7 @@ public class FeedbackDaoImpl implements FeedbackDAO {
             while (resultSet.next()) {
                 feedback.setId(resultSet.getLong(1));
                 feedback.setDescription(resultSet.getString("description"));
-                feedback.setCreated(resultSet.getDate(3).getTime());
+                feedback.setCreated(resultSet.getDate(3));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,7 +123,7 @@ public class FeedbackDaoImpl implements FeedbackDAO {
                 Feedback feedback = new Feedback();
                 feedback.setId(resultSet.getLong(1));
                 feedback.setDescription(resultSet.getString("description"));
-                feedback.setCreated(resultSet.getDate(3).getTime());
+                feedback.setCreated(resultSet.getDate(3));
                 feedbacks.add(feedback);
             }
         } catch (SQLException e) {
