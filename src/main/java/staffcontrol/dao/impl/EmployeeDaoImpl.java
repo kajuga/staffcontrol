@@ -8,8 +8,8 @@ import staffcontrol.dao.interfaces.FeedbackDAO;
 import staffcontrol.dao.interfaces.ProjectDAO;
 import staffcontrol.entity.Employee;
 import staffcontrol.util.BasicConnectionPool;
+
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class EmployeeDaoImpl implements EmployeeDAO {
         try {
             connection = connectionPool.getConnection();
             PreparedStatement prepStat = connection.prepareStatement("INSERT INTO staffcontrol.employee (first_name, last_name, phone_number, email, skype, entry_date, experience, experience_level, language_level, birthday, project_id, feedback_id) " +
-                             "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             prepStat.setString(1, employee.getFirstName());
             prepStat.setString(2, employee.getLastName());
             prepStat.setString(3, employee.getPhoneNumber());
@@ -90,8 +90,8 @@ public class EmployeeDaoImpl implements EmployeeDAO {
         try {
             connection = connectionPool.getConnection();
             PreparedStatement prepStat = connection.prepareStatement("UPDATE staffcontrol.employee SET " +
-                     "first_name = (?), last_name = (?), phone_number = (?), email = (?), skype = (?), entry_date = (?), " +
-                     "experience = (?), experience_level = (?), language_level = (?), birthday = (?), project_id = (?), feedback_id = (?) WHERE id = (?)");
+                    "first_name = (?), last_name = (?), phone_number = (?), email = (?), skype = (?), entry_date = (?), " +
+                    "experience = (?), experience_level = (?), language_level = (?), birthday = (?), project_id = (?), feedback_id = (?) WHERE id = (?)");
             prepStat.setString(1, employee.getFirstName());
             prepStat.setString(2, employee.getLastName());
             prepStat.setString(3, employee.getPhoneNumber());
@@ -136,9 +136,9 @@ public class EmployeeDaoImpl implements EmployeeDAO {
                 employee.setEntryDate(resultSet.getDate(7));
                 employee.setExperience(resultSet.getString(8));
                 String experienceLevel = resultSet.getString("experience_level");
-                employee.setExperienceLevel(experienceLevel != null ? ExperienceLevel.fromString(experienceLevel) : null);
+                employee.setExperienceLevel(experienceLevel != null ? ExperienceLevel.fromKey(experienceLevel) : null);
                 String languageLevel = resultSet.getString("language_level");
-                employee.setLanguageLevel(languageLevel != null ? LanguageLevel.fromString(languageLevel) : null);
+                employee.setLanguageLevel(languageLevel != null ? LanguageLevel.fromKey(languageLevel) : null);
                 employee.setBirthDay(resultSet.getDate("birthday"));
                 employee.setProject(projectDAO.findById(resultSet.getLong("project_id")));
                 employee.setFeedback(feedbackDAO.findById(resultSet.getLong("feedback_id")));
@@ -175,9 +175,9 @@ public class EmployeeDaoImpl implements EmployeeDAO {
                 employee.setEntryDate(resultSet.getDate(7));
                 employee.setExperience(resultSet.getString(8));
                 String experienceLevel = resultSet.getString("experience_level");
-                employee.setExperienceLevel(experienceLevel != null ? ExperienceLevel.fromString(experienceLevel) : null);
+                employee.setExperienceLevel(experienceLevel != null ? ExperienceLevel.fromKey(experienceLevel) : null);
                 String languageLevel = resultSet.getString("language_level");
-                employee.setLanguageLevel(languageLevel != null ? LanguageLevel.fromString(languageLevel) : null);
+                employee.setLanguageLevel(languageLevel != null ? LanguageLevel.fromKey(languageLevel) : null);
                 employee.setBirthDay(resultSet.getDate(11));
                 employee.setProject(projectDAO.findById(resultSet.getLong("project_id")));
                 employee.setFeedback(feedbackDAO.findById(resultSet.getLong("feedback_id")));

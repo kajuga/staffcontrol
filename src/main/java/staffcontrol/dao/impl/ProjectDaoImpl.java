@@ -5,8 +5,11 @@ import staffcontrol.constants.Methodology;
 import staffcontrol.dao.interfaces.ProjectDAO;
 import staffcontrol.dao.interfaces.TeamDAO;
 import staffcontrol.entity.Project;
+import staffcontrol.entity.Team;
 import staffcontrol.util.BasicConnectionPool;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Log
 public class ProjectDaoImpl implements ProjectDAO {
@@ -112,7 +115,7 @@ public class ProjectDaoImpl implements ProjectDAO {
                 project.setName(resultSet.getString("name"));
                 project.setName(resultSet.getString("duration"));
                 String meth = resultSet.getString("methodology");
-                project.setMethodology(meth != null ? Methodology.fromString(meth) : null);
+                project.setMethodology(meth != null ? Methodology.fromKey(meth) : null);
                 project.setName(resultSet.getString("project_manager"));
                 project.setTeam(teamDAO.findById(resultSet.getLong("team_id")));
             }
@@ -125,6 +128,40 @@ public class ProjectDaoImpl implements ProjectDAO {
         }
         log.fine("Project " + id + " successfull finded");
         return project;
+    }
+
+
+    @Override
+    public List<Project> findAll() {
+        List<Project> projects = new ArrayList<>();
+        ResultSet resultSet;
+        Connection connection = null;
+        try {
+            connection = connectionPool.getConnection();
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM staffcontrol.project");
+            while (resultSet.next()) {
+                Project project = new Project();
+                project.setId(resultSet.getLong(1));
+                project.setName(resultSet.getString(2));
+                project.setClient(resultSet.getString(3));
+                project.setDuration(resultSet.getString(4));
+                String methodology = resultSet.getString("methodology");
+                project.setMethodology(methodology != null ? Methodology.fromKey(methodology) : null);
+                project.setProjectManager(resultSet.getString(6));
+                Team team = teamDAO.findById(resultSet.getLong(7));
+                project.setTeam(team);
+                projects.add(project);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connectionPool.releaseConnection(connection);
+            }
+        }
+        log.fine("All projects successfull finded");
+        return projects;
     }
 }
 

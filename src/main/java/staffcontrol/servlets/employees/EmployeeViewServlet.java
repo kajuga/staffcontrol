@@ -28,6 +28,6 @@ public class EmployeeViewServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Employee> employees = employeeDAO.findAll();
         request.setAttribute("employees", employees.toArray());
-        getServletContext().getRequestDispatcher("/views/employees/viewEmployee.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/views/employees/viewEmployeeForm.jsp").forward(request, response);
     }
 }

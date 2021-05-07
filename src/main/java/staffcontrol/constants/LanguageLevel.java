@@ -8,7 +8,7 @@ public enum LanguageLevel {
     C1,
     C2;
 
-    public static LanguageLevel fromString(String value) {
+    public static LanguageLevel fromKey(String value) {
         if (value != null) {
             for (LanguageLevel englishLevel : LanguageLevel.values()) {
                 if (value.equalsIgnoreCase(englishLevel.name())) {

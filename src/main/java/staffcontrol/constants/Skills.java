@@ -6,7 +6,7 @@ public enum Skills {
     SKILLS_THIRD;
 
 
-    public static Skills fromString(String value) {
+    public static Skills fromKey(String value) {
         if (value != null) {
             for (Skills skill : Skills.values()) {
                 if (value.equalsIgnoreCase(skill.name())) {

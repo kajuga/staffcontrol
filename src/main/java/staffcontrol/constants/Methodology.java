@@ -6,7 +6,7 @@ public enum Methodology {
     METHODOLOGY_THIRD;
 
 
-    public static Methodology fromString(String value) {
+    public static Methodology fromKey(String value) {
         if (value != null) {
             for (Methodology methodology : Methodology.values()) {
                 if (value.equalsIgnoreCase(methodology.name())) {

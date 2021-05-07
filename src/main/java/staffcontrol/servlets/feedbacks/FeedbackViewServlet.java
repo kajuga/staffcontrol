@@ -24,10 +24,9 @@ public class FeedbackViewServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Feedback> feedbacks = feedbackDAO.findAll();
-                request.setAttribute("feedbacks", feedbacks.toArray());
-                getServletContext().getRequestDispatcher("/views/feedbacks/viewFeedback.jsp").forward(request, response);
-            }
-
+        request.setAttribute("feedbacks", feedbacks.toArray());
+        getServletContext().getRequestDispatcher("/views/feedbacks/viewFeedbackForm.jsp").forward(request, response);
+    }
 }
 
 

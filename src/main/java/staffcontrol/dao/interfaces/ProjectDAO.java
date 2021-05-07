@@ -9,4 +9,5 @@ public interface ProjectDAO {
     boolean remove (Long id);
     void update(Long id, Project project);
     Project findById(Long id);
+    List<Project> findAll();
 }

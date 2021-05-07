@@ -4,8 +4,16 @@
 <html>
 <head>
     <title>Main page</title>
+    <link type="text/css"
+          rel="stylesheet"
+          href="${pageContext.request.contextPath}/resources/css/style.css">
 </head>
 <body bgcolor="#d4d7dc">
+<div id="wrapper">
+    <div id="header">
+        <h2>Staffcontrol Managment</h2>
+    </div>
+</div>
 
 <p></p>
 <p></p>
