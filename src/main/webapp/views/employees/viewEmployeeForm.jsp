@@ -24,7 +24,7 @@
         />
         <table>
     <tr>
-        <th>id</th>
+<%--        <th>id</th>--%>
         <th>First Name</th>
         <th>Last name</th>
         <th>phone number</th>
@@ -37,11 +37,21 @@
         <th>birthday</th>
         <th>Project</th>
         <th>Feedback</th>
+        <th>Action</th>
     </tr>
 
-    <c:forEach items="${employees}" var="employee">
-    <tr>
-        <td>${employee.id}</td>
+    <c:forEach var="employee" items="${employees}">
+
+        <c:url var="updateLink" value="/editEmployee">
+            <c:param name="employeeId" value="${employee.id}" />
+        </c:url>
+
+        <c:url var="deleteLink" value="/deleteEmployee">
+            <c:param name="employeeId" value="${employee.id}" />
+        </c:url>
+
+        <tr>
+<%--        <td>${employee.id}</td>--%>
         <td>${employee.firstName}</td>
         <td>${employee.lastName}</td>
         <td>${employee.phoneNumber}</td>
@@ -52,11 +62,12 @@
         <td>${employee.experienceLevel}</td>
         <td>${employee.languageLevel}</td>
         <td>${employee.birthDay}</td>
-        <td>${employee.project.id}</td>
+        <td>${employee.project.name}</td>
         <td>${employee.feedback.description}</td>
-        <td><a href="${pageContext.servletContext.contextPath}/deleteEmployee?delete=${employee.id}"
-               onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">Delete</a></td>
-        <td><a href="${pageContext.servletContext.contextPath}/editEmployee?edit=${employee.id}">Update</a></td>
+            <td>
+                <a href="${updateLink}">Update</a>|<a href="${deleteLink}"
+                                                      onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">Delete</a>
+            </td>
     </tr>
     </c:forEach>
         </table>
@@ -65,3 +76,10 @@
     <a href="${pageContext.servletContext.contextPath}/index.jsp">Main page</a>
 </body>
 </html>
+
+
+
+
+
+
+

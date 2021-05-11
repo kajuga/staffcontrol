@@ -111,13 +111,16 @@ public class ProjectDaoImpl implements ProjectDAO {
             prepStat.setLong(1, id);
             resultSet = prepStat.executeQuery();
             while (resultSet.next()) {
-                project.setId(resultSet.getLong("id"));
-                project.setName(resultSet.getString("name"));
-                project.setName(resultSet.getString("duration"));
-                String meth = resultSet.getString("methodology");
-                project.setMethodology(meth != null ? Methodology.fromKey(meth) : null);
-                project.setName(resultSet.getString("project_manager"));
-                project.setTeam(teamDAO.findById(resultSet.getLong("team_id")));
+                project.setId(resultSet.getLong(1));
+                project.setName(resultSet.getString(2));
+                project.setClient(resultSet.getString(3));
+                project.setDuration(resultSet.getString(4));
+                String methodology = resultSet.getString(5);
+                project.setMethodology(methodology != null ? Methodology.fromKey(methodology) : null);
+                project.setProjectManager(resultSet.getString(6));
+                Team team = teamDAO.findById(resultSet.getLong(7));
+                project.setTeam(team);
+                project.setTeam(team);
             }
         } catch (SQLException e) {
             e.printStackTrace();

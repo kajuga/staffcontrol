@@ -45,7 +45,7 @@ public class EmployeeCreateServlet extends HttpServlet {
         getServletContext().getRequestDispatcher("/views/employees/createEmployeeForm.jsp").forward(req, resp);
     }
 
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Employee employee = new Employee();
         employee.setFirstName(request.getParameter("firstName"));
@@ -55,13 +55,10 @@ public class EmployeeCreateServlet extends HttpServlet {
         employee.setSkype(request.getParameter("skype"));
         employee.setEntryDate(Date.valueOf(request.getParameter("entryDate")));
         employee.setExperience(request.getParameter("experience"));
-
-        //TODO
         employee.setExperienceLevel(ExperienceLevel.fromKey(request.getParameter("experienceLevel")));
         employee.setLanguageLevel(LanguageLevel.fromKey(request.getParameter("languageLevel")));
         employee.setBirthDay(Date.valueOf(request.getParameter("birthDay")));
         employee.setProject(projectDAO.findById(Long.parseLong(request.getParameter("project"))));
-        //TODO
         Feedback feedback = new Feedback();
         feedback.setDescription(request.getParameter("feedback"));
         employee.setFeedback(feedbackDAO.create(feedback));

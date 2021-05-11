@@ -2,7 +2,6 @@ package staffcontrol.entity;
 
 import lombok.*;
 import staffcontrol.constants.Methodology;
-;
 
 @Data
 public class Project {
