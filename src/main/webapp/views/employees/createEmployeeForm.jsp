@@ -32,19 +32,19 @@
             <tr>
                 <td align="right">First name :</td>
                 <td>
-                    <input type="text" name="firstName" required>
+                    <input type="text" pattern="^[a-zA-Zа-яА-Я]+(?:[\s-][a-zA-Zа-яА-Я]+)*$" name="firstName" required>
                 </td>
             </tr>
             <tr>
                 <td align="right">Last name :</td>
                 <td>
-                    <input type="text" name="lastName" required>
+                    <input type="text" pattern="^[a-zA-Zа-яА-Я]+(?:[\s-][a-zA-Zа-яА-Я]+)*$" name="lastName" required>
                 </td>
             </tr>
             <tr>
                 <td align="right">Phone number :</td>
                 <td>
-                    <input type="text" name="phoneNumber" required>
+                    <input type="text" placeholder="+7ххxxxxxxxx" name="phoneNumber" required>
                 </td>
             </tr>
             <tr>
