@@ -3,6 +3,7 @@ package staffcontrol.dao.impl;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import staffcontrol.dao.impl.jdbc.FeedbackDaoImpl;
 import staffcontrol.entity.Feedback;
 import org.junit.Test;
 import staffcontrol.util.BasicConnectionPool;

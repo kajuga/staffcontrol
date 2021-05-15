@@ -1,6 +1,6 @@
 package staffcontrol.util;
 
-import staffcontrol.dao.impl.FeedbackDaoImpl;
+import staffcontrol.dao.impl.jdbc.FeedbackDaoImpl;
 
 import java.io.InputStream;
 import java.sql.Connection;

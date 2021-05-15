@@ -1,4 +1,4 @@
-package staffcontrol.dao.impl;
+package staffcontrol.dao.impl.jdbc;
 
 import staffcontrol.dao.interfaces.TeamWithEmployeesDAO;
 import staffcontrol.entity.Team;

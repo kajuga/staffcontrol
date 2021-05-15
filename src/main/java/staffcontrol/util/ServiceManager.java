@@ -1,10 +1,10 @@
 package staffcontrol.util;
 
 import lombok.Getter;
-import staffcontrol.dao.impl.EmployeeDaoImpl;
-import staffcontrol.dao.impl.FeedbackDaoImpl;
-import staffcontrol.dao.impl.ProjectDaoImpl;
-import staffcontrol.dao.impl.TeamDaoImpl;
+import staffcontrol.dao.impl.jdbc.EmployeeDaoImpl;
+import staffcontrol.dao.impl.jdbc.FeedbackDaoImpl;
+import staffcontrol.dao.impl.jdbc.ProjectDaoImpl;
+import staffcontrol.dao.impl.jdbc.TeamDaoImpl;
 import staffcontrol.dao.interfaces.EmployeeDAO;
 import staffcontrol.dao.interfaces.FeedbackDAO;
 import staffcontrol.dao.interfaces.ProjectDAO;

@@ -1,4 +1,4 @@
-package staffcontrol.dao.impl;
+package staffcontrol.dao.impl.jdbc;
 
 import lombok.extern.java.Log;
 import staffcontrol.constants.Methodology;

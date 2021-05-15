@@ -3,6 +3,7 @@ package staffcontrol.dao.impl;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import staffcontrol.dao.impl.jdbc.TeamDaoImpl;
 import staffcontrol.entity.Team;
 import staffcontrol.util.BasicConnectionPool;
 
