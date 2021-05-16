@@ -1,4 +1,4 @@
-package staffcontrol.dao.impl.jdbc;
+package staffcontrol.dao.jdbc;
 
 import lombok.extern.java.Log;
 import staffcontrol.dao.interfaces.FeedbackDAO;

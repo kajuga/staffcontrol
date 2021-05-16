@@ -1,7 +1,7 @@
 package staffcontrol;
 
 import staffcontrol.util.ConnectionUtil;
-import staffcontrol.dao.impl.jdbc.FeedbackDaoImpl;
+import staffcontrol.dao.jdbc.FeedbackDaoImpl;
 
 import java.io.InputStream;
 import java.sql.Connection;

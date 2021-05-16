@@ -1,21 +1,24 @@
-package staffcontrol.dao.impl;
+package staffcontrol.dao;
 
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.jdbc.core.JdbcTemplate;
+import staffcontrol.TestDataSourceUtil;
 import staffcontrol.constants.ExperienceLevel;
 import staffcontrol.constants.LanguageLevel;
 import staffcontrol.constants.Methodology;
-import staffcontrol.dao.impl.jdbc.EmployeeDaoImpl;
-import staffcontrol.dao.impl.jdbc.FeedbackDaoImpl;
-import staffcontrol.dao.impl.jdbc.ProjectDaoImpl;
-import staffcontrol.dao.impl.jdbc.TeamDaoImpl;
+import staffcontrol.dao.interfaces.EmployeeDAO;
+import staffcontrol.dao.interfaces.FeedbackDAO;
+import staffcontrol.dao.interfaces.ProjectDAO;
+import staffcontrol.dao.interfaces.TeamDAO;
+import staffcontrol.dao.spring.jdbc.EmployeeDaoSpringJdbcImpl;
+import staffcontrol.dao.spring.jdbc.FeedbackDaoSpringJdbcImpl;
+import staffcontrol.dao.spring.jdbc.ProjectDaoSpringJdbcImpl;
+import staffcontrol.dao.spring.jdbc.TeamDaoSpringJdbcImpl;
 import staffcontrol.entity.Employee;
 import staffcontrol.entity.Feedback;
 import staffcontrol.entity.Project;
 import staffcontrol.entity.Team;
-import staffcontrol.util.BasicConnectionPool;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,30 +28,21 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 public class EmployeeDaoImplTest {
-    private  static BasicConnectionPool connectionPool;
-    private EmployeeDaoImpl employeeDao;
-    private TeamDaoImpl teamDao;
-    private ProjectDaoImpl projectDAO;
-    private FeedbackDaoImpl feedbackDAO;
-
-    @BeforeClass
-    public static void initConnectionPool() {
-        connectionPool = BasicConnectionPool.create();
-    }
+    private EmployeeDAO employeeDao;
+    private TeamDAO teamDao;
+    private ProjectDAO projectDAO;
+    private FeedbackDAO feedbackDAO;
 
     @Before
     public void init() {
-        feedbackDAO = new FeedbackDaoImpl(connectionPool);
-        teamDao = new TeamDaoImpl(connectionPool);
-        projectDAO = new ProjectDaoImpl(connectionPool, teamDao);
-        employeeDao = new EmployeeDaoImpl(connectionPool, projectDAO, feedbackDAO);
-    }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate.setDataSource(TestDataSourceUtil.createDataSource());
 
-    @AfterClass
-    public static void destroy() throws SQLException {
-        connectionPool.shutdown();
+        feedbackDAO = new FeedbackDaoSpringJdbcImpl(jdbcTemplate);
+        teamDao = new TeamDaoSpringJdbcImpl(jdbcTemplate);
+        projectDAO = new ProjectDaoSpringJdbcImpl(jdbcTemplate, teamDao);
+        employeeDao = new EmployeeDaoSpringJdbcImpl(jdbcTemplate, projectDAO, feedbackDAO);
     }
-
 
     @Test
     public void createEmployee() throws SQLException {

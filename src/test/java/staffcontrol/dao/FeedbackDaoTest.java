@@ -1,33 +1,23 @@
-package staffcontrol.dao.impl;
+package staffcontrol.dao;
 
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
-import staffcontrol.dao.impl.jdbc.FeedbackDaoImpl;
+import org.springframework.jdbc.core.JdbcTemplate;
+import staffcontrol.TestDataSourceUtil;
+import staffcontrol.dao.interfaces.FeedbackDAO;
+import staffcontrol.dao.spring.jdbc.FeedbackDaoSpringJdbcImpl;
 import staffcontrol.entity.Feedback;
 import org.junit.Test;
-import staffcontrol.util.BasicConnectionPool;
 import java.sql.SQLException;
 import java.util.List;
 import static org.junit.Assert.*;
 
-public class FeedbackDaoImplTest {
-    private static BasicConnectionPool basicConnectionPool;
-    private FeedbackDaoImpl feedbackDao;
-
-    @BeforeClass
-    public static void initConnectionPool() {
-        basicConnectionPool = BasicConnectionPool.create();
-    }
+public class FeedbackDaoTest {
+    private FeedbackDAO feedbackDao;
 
     @Before
     public void init() {
-        feedbackDao = new FeedbackDaoImpl(basicConnectionPool);
-    }
-
-    @AfterClass
-    public static void destroy() throws SQLException {
-        basicConnectionPool.shutdown();
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(TestDataSourceUtil.createDataSource(), false);
+        feedbackDao = new FeedbackDaoSpringJdbcImpl(jdbcTemplate);
     }
 
     @Test

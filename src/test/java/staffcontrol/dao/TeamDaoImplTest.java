@@ -1,9 +1,9 @@
-package staffcontrol.dao.impl;
+package staffcontrol.dao;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import staffcontrol.dao.impl.jdbc.TeamDaoImpl;
+import staffcontrol.dao.jdbc.TeamDaoImpl;
 import staffcontrol.entity.Team;
 import staffcontrol.util.BasicConnectionPool;
 

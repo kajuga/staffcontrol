@@ -1,7 +1,7 @@
 package staffcontrol.servlets.staff;
 
 import staffcontrol.dao.interfaces.EmployeeDAO;
-import staffcontrol.util.ServiceManager;
+import staffcontrol.util.SpringServiceManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ public class StaffViewServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        ServiceManager serviceManager = ServiceManager.getInstance(getServletContext());
+        SpringServiceManager serviceManager = SpringServiceManager.getInstance(getServletContext());
         employeeDAO = serviceManager.getEmployeeDAO();
     }
 

@@ -1,4 +1,4 @@
-package staffcontrol.dao.impl;
+package staffcontrol.dao;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -7,8 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import staffcontrol.constants.Methodology;
-import staffcontrol.dao.impl.jdbc.ProjectDaoImpl;
-import staffcontrol.dao.impl.jdbc.TeamDaoImpl;
+import staffcontrol.dao.jdbc.ProjectDaoImpl;
+import staffcontrol.dao.jdbc.TeamDaoImpl;
 import staffcontrol.entity.Project;
 import staffcontrol.entity.Team;
 import staffcontrol.util.BasicConnectionPool;

@@ -11,10 +11,9 @@ import staffcontrol.entity.Employee;
 import staffcontrol.entity.Feedback;
 import staffcontrol.entity.Project;
 import staffcontrol.exceptions.EntityExistException;
-import staffcontrol.util.ServiceManager;
+import staffcontrol.util.SpringServiceManager;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 
 import javax.servlet.RequestDispatcher;
@@ -34,9 +33,9 @@ public class EmployeeEditServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        employeeDAO = ServiceManager.getInstance(getServletContext()).getEmployeeDAO();
-        projectDAO = ServiceManager.getInstance(getServletContext()).getProjectDAO();
-        feedbackDAO = ServiceManager.getInstance(getServletContext()).getFeedbackDAO();
+        employeeDAO = SpringServiceManager.getInstance(getServletContext()).getEmployeeDAO();
+        projectDAO = SpringServiceManager.getInstance(getServletContext()).getProjectDAO();
+        feedbackDAO = SpringServiceManager.getInstance(getServletContext()).getFeedbackDAO();
 
     }
 
