@@ -30,7 +30,7 @@ public class TeamDaoSpringJdbcImpl implements TeamDAO {
             ps.setString(1, team.getTitle());
             return ps;
         }, keyHolder);
-        long newTeamId = new Long((Integer)keyHolder.getKeyList().get(0).get("id"));
+        long newTeamId = new Long((Integer) keyHolder.getKeyList().get(0).get("id"));
         team.setId(newTeamId);
         return team;
     }

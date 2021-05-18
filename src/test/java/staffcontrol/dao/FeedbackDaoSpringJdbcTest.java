@@ -2,16 +2,18 @@ package staffcontrol.dao;
 
 import org.junit.Before;
 import org.springframework.jdbc.core.JdbcTemplate;
-import staffcontrol.TestDataSourceUtil;
+import staffcontrol.utils.TestDataSourceUtil;
 import staffcontrol.dao.interfaces.FeedbackDAO;
 import staffcontrol.dao.spring.jdbc.FeedbackDaoSpringJdbcImpl;
 import staffcontrol.entity.Feedback;
 import org.junit.Test;
+
 import java.sql.SQLException;
 import java.util.List;
+
 import static org.junit.Assert.*;
 
-public class FeedbackDaoTest {
+public class FeedbackDaoSpringJdbcTest {
     private FeedbackDAO feedbackDao;
 
     @Before

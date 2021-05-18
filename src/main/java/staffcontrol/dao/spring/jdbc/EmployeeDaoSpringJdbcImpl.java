@@ -52,7 +52,7 @@ public class EmployeeDaoSpringJdbcImpl implements EmployeeDAO {
             prepStat.setLong(12, employee.getFeedback().getId());
             return prepStat;
         }, keyHolder);
-        long newEmployeeId = new Long((Integer)keyHolder.getKeyList().get(0).get("id"));
+        long newEmployeeId = new Long((Integer) keyHolder.getKeyList().get(0).get("id"));
         employee.setId(newEmployeeId);
         return employee;
     }
@@ -73,8 +73,8 @@ public class EmployeeDaoSpringJdbcImpl implements EmployeeDAO {
     @Override
     public void update(Long id, Employee employee) {
         jdbcTemplate.update("UPDATE staffcontrol.employee SET first_name = (?), last_name = (?), phone_number = (?)," +
-                "email = (?), skype = (?), entry_date = (?), experience = (?), experience_level = (?), language_level = (?), " +
-                "birthday = (?), project_id = (?), feedback_id = (?) WHERE id = (?)",
+                        "email = (?), skype = (?), entry_date = (?), experience = (?), experience_level = (?), language_level = (?), " +
+                        "birthday = (?), project_id = (?), feedback_id = (?) WHERE id = (?)",
                 employee.getFirstName(), employee.getLastName(), employee.getPhoneNumber(), employee.getEmail(),
                 employee.getSkype(), employee.getEntryDate(), employee.getExperience(), String.valueOf(employee.getExperienceLevel()),
                 String.valueOf(employee.getLanguageLevel()), employee.getBirthDay(), employee.getProject().getId(),

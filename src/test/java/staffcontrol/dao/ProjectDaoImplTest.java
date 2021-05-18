@@ -1,43 +1,33 @@
 package staffcontrol.dao;
 
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.jdbc.core.JdbcTemplate;
+import staffcontrol.utils.TestDataSourceUtil;
 import staffcontrol.constants.Methodology;
-import staffcontrol.dao.jdbc.ProjectDaoImpl;
-import staffcontrol.dao.jdbc.TeamDaoImpl;
+import staffcontrol.dao.interfaces.ProjectDAO;
+import staffcontrol.dao.interfaces.TeamDAO;
+import staffcontrol.dao.spring.jdbc.ProjectDaoSpringJdbcImpl;
+import staffcontrol.dao.spring.jdbc.TeamDaoSpringJdbcImpl;
 import staffcontrol.entity.Project;
 import staffcontrol.entity.Team;
-import staffcontrol.util.BasicConnectionPool;
-
-import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
 @RunWith(JUnit4.class)
 public class ProjectDaoImplTest {
 
-    private TeamDaoImpl teamDao;
-    private ProjectDaoImpl projectDao;
-    private static BasicConnectionPool basicConnectionPool;
-
-    @BeforeClass
-    public static void initConnectionPool() {
-        basicConnectionPool = BasicConnectionPool.create();
-    }
+    private TeamDAO teamDao;
+    private ProjectDAO projectDao;
+    private JdbcTemplate jdbcTemplate;
 
     @Before
     public void init() {
-        teamDao = new TeamDaoImpl(basicConnectionPool);
-        projectDao = new ProjectDaoImpl(basicConnectionPool, teamDao);
-    }
-
-    @AfterClass
-    public static void destroy() throws SQLException {
-        basicConnectionPool.shutdown();
+        jdbcTemplate = new JdbcTemplate(TestDataSourceUtil.createDataSource(), false);
+        teamDao = new TeamDaoSpringJdbcImpl(jdbcTemplate);
+        projectDao = new ProjectDaoSpringJdbcImpl(jdbcTemplate, teamDao);
     }
 
     @Test
@@ -64,26 +54,26 @@ public class ProjectDaoImplTest {
     @Test
     public void updateAndDelete() {
         Project project = new Project();
-        project.setName("XXX project");
+        project.setName("XXX projectName");
         project.setClient("XXX client");
         project.setDuration("XXX week");
         project.setMethodology(Methodology.METHODOLOGY_FIRST);
-        project.setProjectManager("XXX");
+        project.setProjectManager("XXX manager");
         Team createdInDBteam = new Team();
         createdInDBteam.setTitle("XXX team");
         long teamId = teamDao.create(createdInDBteam).getId();
         project.setTeam(teamDao.findById(teamId));
         long projectId = projectDao.create(project).getId();
-        Project updateDate = new Project();
-        updateDate.setName("XXX_Updated project");
-        updateDate.setClient("XXX_Updatet client");
-        updateDate.setDuration("XXX_Updated week");
-        updateDate.setMethodology(Methodology.METHODOLOGY_THIRD);
-        updateDate.setProjectManager("XXX_updated");
-        updateDate.setTeam(project.getTeam());
-        projectDao.update(projectId, updateDate);
+        Project updateProjectDate = new Project();
+        updateProjectDate.setName("XXX_Updated project");
+        updateProjectDate.setClient("XXX_Updated client");
+        updateProjectDate.setDuration("XXX_Updated week");
+        updateProjectDate.setMethodology(Methodology.METHODOLOGY_THIRD);
+        updateProjectDate.setProjectManager("XXX_updated manager");
+        updateProjectDate.setTeam(project.getTeam());
+        projectDao.update(projectId, updateProjectDate);
         Project loadedProject = projectDao.findById(projectId);
-        assertEquals(projectDao.findById(projectId).getName(), "XXX_updated");
+        assertEquals(projectDao.findById(projectId).getName(), "XXX_Updated project");
         assertTrue(projectDao.remove(loadedProject.getId()));
         assertTrue(teamDao.remove(teamId));
     }

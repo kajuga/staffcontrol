@@ -30,18 +30,18 @@ public class ProjectDaoSpringJdbcImpl implements ProjectDAO {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
-                    PreparedStatement prepStat = con.prepareStatement(
-                            "INSERT INTO staffcontrol.project (name, client, duration, methodology, project_manager, team_id) VALUES (?,?,?,?,?,?)",
-                            Statement.RETURN_GENERATED_KEYS);
-                    prepStat.setString(1, project.getName());
-                    prepStat.setString(2, project.getClient());
-                    prepStat.setString(3, project.getDuration());
-                    prepStat.setString(4, String.valueOf(project.getMethodology()));
-                    prepStat.setString(5, project.getProjectManager());
-                    prepStat.setLong(6, project.getTeam().getId());
-                    return prepStat;
-                }, keyHolder);
-        long newProjectId = new Long((Integer)keyHolder.getKeyList().get(0).get("id"));
+            PreparedStatement prepStat = con.prepareStatement(
+                    "INSERT INTO staffcontrol.project (name, client, duration, methodology, project_manager, team_id) VALUES (?,?,?,?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            prepStat.setString(1, project.getName());
+            prepStat.setString(2, project.getClient());
+            prepStat.setString(3, project.getDuration());
+            prepStat.setString(4, String.valueOf(project.getMethodology()));
+            prepStat.setString(5, project.getProjectManager());
+            prepStat.setLong(6, project.getTeam().getId());
+            return prepStat;
+        }, keyHolder);
+        long newProjectId = new Long((Integer) keyHolder.getKeyList().get(0).get("id"));
         project.setId(newProjectId);
         return project;
     }

@@ -2,16 +2,13 @@ package staffcontrol.dao.spring.jdbc;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.jdbc.support.SQLExceptionTranslator;
 import staffcontrol.dao.interfaces.FeedbackDAO;
 import staffcontrol.entity.Feedback;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackDaoSpringJdbcImpl implements FeedbackDAO {
@@ -32,9 +29,9 @@ public class FeedbackDaoSpringJdbcImpl implements FeedbackDAO {
             ps.setString(1, feedback.getDescription());
             return ps;
         }, keyHolder);
-        long newFedbackId = new Long((Integer)keyHolder.getKeyList().get(0).get("id"));
+        long newFedbackId = new Long((Integer) keyHolder.getKeyList().get(0).get("id"));
         feedback.setId(newFedbackId);
-                return feedback;
+        return feedback;
     }
 
     @Override
@@ -49,13 +46,13 @@ public class FeedbackDaoSpringJdbcImpl implements FeedbackDAO {
         return result;
     }
 
-        @Override
+    @Override
     public void update(Long id, Feedback feedback) {
         jdbcTemplate.update("UPDATE staffcontrol.feedback SET description = (?) WHERE id = (?)", feedback.getDescription(), id);
     }
 
 
- //If object field names equals table column names, we can do this:
+    //If object field names equals table column names, we can do this:
     @Override
     public Feedback findById(Long id) {
         return jdbcTemplate.queryForObject("SELECT * FROM staffcontrol.feedback WHERE id=?", new BeanPropertyRowMapper<>(Feedback.class), id);
@@ -78,7 +75,7 @@ public class FeedbackDaoSpringJdbcImpl implements FeedbackDAO {
         return feedbacks;
     }
 
-    private class FeedbackRowMapper implements  RowMapper<Feedback> {
+    private class FeedbackRowMapper implements RowMapper<Feedback> {
 
         @Override
         public Feedback mapRow(ResultSet resultSet, int i) throws SQLException {

@@ -3,9 +3,11 @@ package staffcontrol.dao;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import staffcontrol.dao.jdbc.TeamDaoImpl;
+import org.springframework.jdbc.core.JdbcTemplate;
+import staffcontrol.utils.TestDataSourceUtil;
+import staffcontrol.dao.interfaces.TeamDAO;
+import staffcontrol.dao.spring.jdbc.TeamDaoSpringJdbcImpl;
 import staffcontrol.entity.Team;
-import staffcontrol.util.BasicConnectionPool;
 
 import java.sql.SQLException;
 
@@ -13,23 +15,13 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnit4.class)
-public class TeamDaoImplTest {
-    private TeamDaoImpl teamDao;
-    private static BasicConnectionPool basicConnectionPool;
-
-    @BeforeClass
-    public static void initConnectionPool() {
-        basicConnectionPool = BasicConnectionPool.create();
-    }
+public class TeamDaoImplSpringJdbcTest {
+    private TeamDAO teamDao;
 
     @Before
     public void init() {
-        teamDao = new TeamDaoImpl(basicConnectionPool);
-    }
-
-    @AfterClass
-    public static void destroy() throws SQLException {
-        basicConnectionPool.shutdown();
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(TestDataSourceUtil.createDataSource(), false);
+        teamDao = new TeamDaoSpringJdbcImpl(jdbcTemplate);
     }
 
     @Test
