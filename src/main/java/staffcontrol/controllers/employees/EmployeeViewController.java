@@ -2,6 +2,7 @@ package staffcontrol.controllers.employees;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +12,7 @@ import staffcontrol.constants.Methodology;
 import staffcontrol.dao.interfaces.EmployeeDAO;
 import staffcontrol.dao.interfaces.ProjectDAO;
 import staffcontrol.entity.Employee;
+import staffcontrol.entity.Feedback;
 import staffcontrol.entity.Project;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -47,9 +49,9 @@ public class EmployeeViewController {
     }
 
     @RequestMapping(value = "/editEmployee", method = RequestMethod.POST)
-    protected String editEmployee(Employee employee)  {
+    protected String editEmployee(@ModelAttribute Employee employee)  {
         employeeDAO.update(employee.getId(), employee);
-       return "redirect:/employees";
+        return "redirect:/employees";
     }
 
 

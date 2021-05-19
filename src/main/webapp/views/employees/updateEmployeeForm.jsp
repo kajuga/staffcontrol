@@ -7,10 +7,10 @@
     <title>Update employee</title>
     <link type="text/css"
           rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/style.css" />
+          href="/css/style.css" />
     <link type="text/css"
           rel="stylesheet"
-          href="${pageContext.request.contextPath}/resources/css/add-employee.css">
+          href="/css/add-employee.css">
 </head>
 <body>
 <div id="wrapper">
@@ -22,8 +22,6 @@
     <h3>Make the necessary changes :</h3>
 
     <sf:form method="POST" modelAttribute="employee">
-        <form:hidden path="id"/>
-
         <table>
             <tbody>
             <tr>
@@ -111,17 +109,25 @@
                 <td>
                     <sf:select path="project.id" id="projects">
                         <c:forEach items="${projects}" var="project">
-                            <sf:option value="${project}">
+                            <sf:option value="${project.id}">
                                 <c:out value="${project.name}"/>
                             </sf:option>
                         </c:forEach>
                     </sf:select>
                 </td>
             </tr>
-            <td align="right">Feedback :</td>
-            <td>
-                <sf:input path="feedback.id" type="text" name="feedback" value="${employee.feedback.id} "/>
-            </td>
+
+            <tr hidden>
+                <td align="right" hidden></td>
+                <td hidden>
+                    <sf:input path="feedback.id" type="text" name="feedbackId" value="${feedback.id}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Feedback :</td>
+                <td>
+                    <sf:input path="feedback.description" type="text" name="feedbackDescription" value="${feedback.description}"/>
+                </td>
             </tr>
 
             <tr>
