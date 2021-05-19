@@ -15,7 +15,7 @@ INSERT INTO staffcontrol.project (name, client, duration, methodology, project_m
 ('The developed project #3', 'Microsoft inc.', '45 days', 'methodology_third', 'Boyarski N.V.', 3);
 
 INSERT INTO staffcontrol.employee (first_name, last_name, phone_number, email, skype, entry_date, experience, experience_level, language_level, birthday, project_id, feedback_id) VALUES
-('Aleksandr', 'Ivanov', '+79129345678', 'ivanov@mail.ru','@ivanov', '1999-10-01', 'not_bad_skills', 'j1', 'b2', '2001-06-22', 2,1),
-('Ivan', 'Aleksandrov', '+79224541265', 'aleksandrov@mail.ru','@aleksandrov', '2019-04-12', 'good_skills', 'm1', 'b2', '1980-03-19', 1,3),
-('Kurt', 'Kozlov', '+76543543826', 'kozlov@mail.ru','@kozlov', '2010-11-03', 'average_skills', 'm2', 'c1', '1995-03-21', 2,2),
-('Sergei', 'Gubenko', '+78743764133', 'gubenko@mail.ru','@gubenko', '2021-01-01', 'santa_skills', 's2', 'c2', '1998-08-05', 3,4);
+('Aleksandr', 'Ivanov', '+79129345678', 'ivanov@mail.ru','@ivanov', '1999-10-01', 'not_bad_skills', 'J1', 'B2', '2001-06-22', 2,1),
+('Ivan', 'Aleksandrov', '+79224541265', 'aleksandrov@mail.ru','@aleksandrov', '2019-04-12', 'good_skills', 'M1', 'B2', '1980-03-19', 1,3),
+('Kurt', 'Kozlov', '+76543543826', 'kozlov@mail.ru','@kozlov', '2010-11-03', 'average_skills', 'M2', 'C1', '1995-03-21', 2,2),
+('Sergei', 'Gubenko', '+78743764133', 'gubenko@mail.ru','@gubenko', '2021-01-01', 'santa_skills', 'S2', 'C2', '1998-08-05', 3,4);

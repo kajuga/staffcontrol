@@ -1,6 +1,7 @@
 <%--<%@ page import="staffcontrol.constants.LanguageLevel" %>--%>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 <html>
 
@@ -24,110 +25,108 @@
 <div id="container">
     <h3>Fill in the form:</h3>
 
-    <form action="${pageContext.servletContext.contextPath}/createEmployee" method="POST">
-        <form:hidden path="id"/>
+    <sf:form method="POST" modelAttribute="employee">
+    <table>
+        <tr>
+            <td align="right">First name :</td>
+            <td>
+                <sf:input path="firstName" type="text" name="firstName" value=""/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Last name :</td>
+            <td>
+                <input type="text" name="lastName" value="">
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Phone number :</td>
+            <td>
+                <sf:input path="phoneNumber" type="text" name="phoneNumber" value=""/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">email :</td>
+            <td>
+                <sf:input path="email" type="email" name="email" value=""/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">skype :</td>
+            <td>
+                <sf:input path="skype" type="text" name="skype" value=""/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Entry Date :</td>
+            <td>
+                <sf:input path="entryDate" type="date" name="entryDate" value=""/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Experience :</td>
+            <td>
+                <sf:input path="experience" type="text" name="experience" value=""/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Experience Level :</td>
+            <td>
+                <sf:select path="experienceLevel" id="experienceLevels">
+                    <c:forEach items="${experienceLevels}" var="experienceLevel">
+                        <sf:option value="${experienceLevel}">
+                            <c:out value="${experienceLevel.name()}"/>
+                        </sf:option>
+                    </c:forEach>
+                </sf:select>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Language Level :</td>
+            <td>
+                <sf:select path="languageLevel" id="languageLevels">
+                    <c:forEach items="${languageLevels}" var="languageLevel">
+                        <sf:option value="${languageLevel}">
+                            <c:out value="${languageLevel.name()}"/>
+                        </sf:option>
+                    </c:forEach>
+                </sf:select>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">Birthday :</td>
+            <td>
+                <sf:input path="birthDay" type="date" name="birthDay" value=""/>
+            </td>
+        </tr>
 
-        <table>
-            <tbody>
-            <tr>
-                <td align="right">First name :</td>
-                <td>
-                    <input type="text" pattern="^[a-zA-Zа-яА-Я]+(?:[\s-][a-zA-Zа-яА-Я]+)*$" name="firstName" required>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">Last name :</td>
-                <td>
-                    <input type="text" pattern="^[a-zA-Zа-яА-Я]+(?:[\s-][a-zA-Zа-яА-Я]+)*$" name="lastName" required>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">Phone number :</td>
-                <td>
-                    <input type="text" placeholder="+7ххxxxxxxxx" name="phoneNumber" required>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">email :</td>
-                <td>
-                    <input type="email" name="email" required>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">skype :</td>
-                <td>
-                    <input type="text" name="skype" required>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">Entry Date :</td>
-                <td>
-                    <input type="date" name="entryDate" required>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">Experience :</td>
-                <td>
-                    <input type="text" name="experience" required>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">Experience Level :</td>
-                <td>
-                    <select name="experienceLevel">
-                        <option value="${selected.name()}" selected>${selected}</option>
-                        <c:forEach items="${experienceLevels}" var="experienceLevel">
-                            <c:if test="${experienceLevel != selected}">
-                                <option value="${experienceLevel.name()}">${experienceLevel}</option>
-                            </c:if>
-                        </c:forEach>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">Language Level :</td>
-                <td>
-                    <select name="languageLevel">
-                        <option value="${selected.name()}" selected>${selected}</option>
-                        <c:forEach items="${languageLevels}" var="languageLevel">
-                            <c:if test="${languageLevel != selected}">
-                                <option value="${languageLevel.name()}">${languageLevel}</option>
-                            </c:if>
-                        </c:forEach>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">Birthday :</td>
-                <td>
-                    <input type="date" name="birthDay" required>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">Project :</td>
-                <td>
-                    <select name="project">
-                        <option value="${project.getId()}" selected>${project.getName()}</option>
-                        <c:forEach items="${projects}" var="item">
-                            <c:if test="${item != selected}">
-                                <option value="${item.getId()}">${item.getName()}</option>
-                            </c:if>
-                        </c:forEach>
-                    </select>
-                </td>
-            </tr>
+        <tr>
+            <td align="right">Project :</td>
+            <td>
+                <sf:select path="project.id" id="projects">
+                    <c:forEach items="${projects}" var="project">
+                        <sf:option value="${project.id}">
+                            <c:out value="${project.name}"/>
+                        </sf:option>
+                    </c:forEach>
+                </sf:select>
+            </td>
+        </tr>
+
+        <tr>
             <td align="right">Feedback :</td>
             <td>
-                <input type="text" name="feedback" required>
+                <sf:input path="feedback.description" type="text" name="feedbackDescription" value=""/>
             </td>
-            </tr>
+        </tr>
 
-            <tr>
-                <td><input type="submit" align="center" value="Создать"/></td>
-            </tr>
+        <tr>
+            <td><input type="submit" align="center" value="Save changes"/></td>
+        </tr>
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
+    </sf:form>
         <p>
             <a href="${pageContext.servletContext.contextPath}/index.jsp">Main page</a>
         </p>

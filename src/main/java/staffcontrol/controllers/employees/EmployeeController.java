@@ -2,31 +2,27 @@ package staffcontrol.controllers.employees;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import staffcontrol.constants.ExperienceLevel;
 import staffcontrol.constants.LanguageLevel;
 import staffcontrol.constants.Methodology;
 import staffcontrol.dao.interfaces.EmployeeDAO;
+import staffcontrol.dao.interfaces.FeedbackDAO;
 import staffcontrol.dao.interfaces.ProjectDAO;
 import staffcontrol.entity.Employee;
-import staffcontrol.entity.Feedback;
 import staffcontrol.entity.Project;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-public class EmployeeViewController {
+public class EmployeeController {
     private final EmployeeDAO employeeDAO;
     private final ProjectDAO projectDAO;
+    private final FeedbackDAO feedbackDAO;
 
-
-    public EmployeeViewController(EmployeeDAO employeeDAO, ProjectDAO projectDAO) {
+    public EmployeeController(EmployeeDAO employeeDAO, ProjectDAO projectDAO, FeedbackDAO feedbackDAO) {
         this.employeeDAO = employeeDAO;
-
         this.projectDAO = projectDAO;
+        this.feedbackDAO = feedbackDAO;
     }
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
@@ -49,11 +45,35 @@ public class EmployeeViewController {
     }
 
     @RequestMapping(value = "/editEmployee", method = RequestMethod.POST)
-    protected String editEmployee(@ModelAttribute Employee employee)  {
+    protected String editEmployee(@ModelAttribute Employee employee) {
+        feedbackDAO.update(employee.getFeedback().getId(), employee.getFeedback());
         employeeDAO.update(employee.getId(), employee);
         return "redirect:/employees";
     }
 
+    @RequestMapping(value = "/deleteEmployee", method = RequestMethod.GET)
+    protected String deleteEmployee(@RequestParam("employeeId") Long employeeId) {
+        employeeDAO.remove(employeeId);
+        return "redirect:/employees";
+    }
+
+    @RequestMapping(value = "/createEmployee", method = RequestMethod.GET)
+    public String showFormAdd(Model model) {
+        model.addAttribute("employee", new Employee());
+        List<Project> projects = projectDAO.findAll();
+        model.addAttribute("experienceLevels", ExperienceLevel.values());
+        model.addAttribute("methodology", Methodology.values());
+        model.addAttribute("languageLevels", LanguageLevel.values());
+        model.addAttribute("projects", projects);
+        return "/employees/createEmployeeForm";
+    }
+
+    @RequestMapping(value = "/createEmployee", method = RequestMethod.POST)
+    protected String createEmployee(@ModelAttribute Employee employee) {
+        feedbackDAO.create(employee.getFeedback());
+        employeeDAO.create(employee);
+        return "redirect:/employees";
+    }
 
 
 }

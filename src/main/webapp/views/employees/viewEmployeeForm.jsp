@@ -1,6 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <html>
 <head>
     <title>Employees</title>
@@ -8,7 +7,6 @@
           rel="stylesheet"
           href="${pageContext.request.contextPath}/css/style.css" />
 </head>
-
 <body>
 
 <div id="wrapper">
@@ -19,7 +17,7 @@
 <div id="container">
     <div id="content">
         <input type="button" value="Add Employee"
-               onclick="window.location.href='/staffcontrol/createEmployee'; return false;"
+               onclick="window.location.href='createEmployee'; return false;"
                class="add-button"
         />
         <table>
@@ -76,10 +74,3 @@
     <a href="${pageContext.servletContext.contextPath}/index.jsp">Main page</a>
 </body>
 </html>
-
-
-
-
-
-
-
