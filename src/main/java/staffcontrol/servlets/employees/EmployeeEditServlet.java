@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/editEmployee")
 public class EmployeeEditServlet extends HttpServlet {
     EmployeeDAO employeeDAO;
     ProjectDAO projectDAO;
