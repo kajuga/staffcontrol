@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 import staffcontrol.constants.Methodology;
 import staffcontrol.dao.interfaces.ProjectDAO;
 import staffcontrol.dao.interfaces.TeamDAO;
@@ -14,6 +15,7 @@ import staffcontrol.entity.Team;
 import java.sql.*;
 import java.util.List;
 
+@Component
 @Log
 public class ProjectDaoSpringJdbcImpl implements ProjectDAO {
 

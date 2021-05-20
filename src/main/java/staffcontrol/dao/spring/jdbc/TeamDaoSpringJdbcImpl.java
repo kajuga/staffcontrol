@@ -5,12 +5,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 import staffcontrol.dao.interfaces.TeamDAO;
 import staffcontrol.entity.Team;
 
 import java.sql.*;
 import java.util.List;
 
+@Component
 @Log
 public class TeamDaoSpringJdbcImpl implements TeamDAO {
     private final JdbcTemplate jdbcTemplate;

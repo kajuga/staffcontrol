@@ -11,13 +11,7 @@
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <context:annotation-config/>
-    <context:component-scan base-package="staffcontrol.controllers"/>
+    <context:component-scan base-package="staffcontrol"/>
 
     <mvc:annotation-driven/>
-
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/views/"/>
-        <property name="suffix" value=".jsp"/>
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-    </bean>
 </beans>
