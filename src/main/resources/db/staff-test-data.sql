@@ -10,9 +10,9 @@ INSERT INTO staffcontrol.team(title) VALUES
 ('Team_3');
 
 INSERT INTO staffcontrol.project (name, client, duration, methodology, project_manager, team_id) VALUES
-('The developed project #1', 'Sony inc.', '15 days', 'methodology_2', 'Sikorsky A.A.', 2),
-('The developed project #2', 'Intel inc.', '125 days', 'methodology_1', 'Ivanov I.A.', 1),
-('The developed project #3', 'Microsoft inc.', '45 days', 'methodology_3', 'Boyarski N.V.', 3);
+('The developed project #1', 'Sony inc.', '15 days', 'methodology_second', 'Sikorsky A.A.', 2),
+('The developed project #2', 'Intel inc.', '125 days', 'methodology_first', 'Ivanov I.A.', 1),
+('The developed project #3', 'Microsoft inc.', '45 days', 'methodology_third', 'Boyarski N.V.', 3);
 
 INSERT INTO staffcontrol.employee (first_name, last_name, phone_number, email, skype, entry_date, experience, experience_level, language_level, birthday, project_id, feedback_id) VALUES
 ('Aleksandr', 'Ivanov', '+79129345678', 'ivanov@mail.ru','@ivanov', '1999-10-01', 'not_bad_skills', 'j1', 'b2', '2001-06-22', 2,1),
