@@ -4,7 +4,6 @@ import lombok.extern.java.Log;
 import staffcontrol.dao.interfaces.TeamDAO;
 import staffcontrol.entity.Team;
 import staffcontrol.util.BasicConnectionPool;
-
 import java.sql.*;
 
 @Log
